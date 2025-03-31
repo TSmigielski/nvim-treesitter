@@ -4,7 +4,19 @@
   (declaration_list)
   (switch_body)
   (switch_expression)
+  (initializer_expression)
 ] @indent.begin
+
+; Indent if without braces
+; I have only a slight clue what this does
+; I've copied it from a C indent query
+((if_statement
+  consequence: (_) @_body)@indent.begin
+  (#not-kind-eq? @_body "block"))
+
+; Outdent if without braces
+(if_statement
+  consequence: (_ ";" @indent.end))
 
 ; Indent immediately after a case statement
 ((switch_section) @indent.begin
@@ -17,23 +29,7 @@
 ; Fixes double indentation
 (switch_expression "{" @indent.branch)
 
-; Fixes indentation during switch expression creation
-; ((ERROR "switch") @indent.begin
-;  (#set! indent.immediate 1))
-
-
 ("}" @indent.end)
 ("}" @indent.branch)
-
-; [
-;  (block)
-;  (switch_statement)
-;  ] "}" @indent.end
-
-
-; (expression_statement ";" @indent.end)
-; (local_function_statement ";" @indent.end)
-; (local_declaration_statement ";" @indent.end)
-
 
 (comment) @indent.auto
