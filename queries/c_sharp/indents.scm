@@ -5,6 +5,7 @@
   (switch_body)
   (switch_expression)
   (initializer_expression)
+  (enum_member_declaration_list)
 ] @indent.begin
 
 ; Indent if without braces
@@ -17,6 +18,13 @@
 ; Outdent if without braces
 (if_statement
   consequence: (_ ";" @indent.end))
+
+; The same cases with a for loop
+((for_statement
+  body: (_) @_body)@indent.begin
+  (#not-kind-eq? @_body "block"))
+(for_statement
+  body: (_ ";" @indent.end))
 
 ; Indent immediately after a case statement
 ((switch_section) @indent.begin
