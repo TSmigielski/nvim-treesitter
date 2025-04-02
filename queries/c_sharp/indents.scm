@@ -6,6 +6,7 @@
   (switch_expression)
   (initializer_expression)
   (enum_member_declaration_list)
+  (accessor_list)
 ] @indent.begin
 
 ; Indent if without braces
